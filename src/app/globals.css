@@ -28,6 +28,13 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+/* Fix for HeroIcon sizing */
+svg[data-slot="icon"] {
+  height: 1.25rem;
+  width: 1.25rem;
+  flex-shrink: 0;
+}
+
 @layer components {
   .btn-primary {
     @apply bg-[#00BFA6] hover:bg-[#00AB95] text-white font-medium px-5 py-2.5 rounded-md transition-colors;

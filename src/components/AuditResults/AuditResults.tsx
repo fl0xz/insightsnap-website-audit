@@ -1,11 +1,28 @@
 import React, { useState } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFReport from "@/components/PDFReport/PDFReport";
-import { ChevronDownIcon, ChevronUpIcon, ExclamationTriangleIcon, CheckCircleIcon, ShieldCheckIcon, ShieldExclamationIcon, ClockIcon, TagIcon, LightBulbIcon } from '@heroicons/react/24/solid';
+import { 
+  ChevronDownIcon, 
+  ChevronUpIcon, 
+  ExclamationTriangleIcon, 
+  CheckCircleIcon, 
+  ShieldCheckIcon, 
+  ShieldExclamationIcon, 
+  ClockIcon, 
+  TagIcon, 
+  LightBulbIcon,
+  UserGroupIcon,
+  FingerPrintIcon,
+  GlobeAltIcon,
+  ChartBarIcon,
+  MagnifyingGlassIcon,
+  ArrowPathIcon
+} from '@heroicons/react/24/solid';
 import ScoreIndicator from "@/components/ui/ScoreIndicator";
 import OverallHealthScore from "./OverallHealthScore";
 import MobileOptimization from "./MobileOptimization";
 import BestPractices from "./BestPractices";
+import styles from './AuditResults.module.css';
 
 interface AuditResultsProps {
   results: any;
@@ -311,53 +328,32 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
     }
   };
 
+  // For PDF Downloading
   const renderPDFDownloadLink = () => {
     try {
       return (
-        <PDFDownloadLink 
-          document={<PDFReport results={results} url={results.url} />} 
-          fileName={`website-audit-${new Date().toISOString().slice(0, 10)}.pdf`}
-          className="py-2.5 px-6 bg-brand-primary hover:bg-brand-dark text-white font-medium rounded-lg transition-colors flex items-center shadow-md"
+        <PDFDownloadLink
+          document={<PDFReport results={results} url={results.url || 'Not specified'} />}
+          fileName={`InsightSnap_Website_Audit_${new Date().toISOString().split('T')[0]}.pdf`}
+          className="mt-6 btn-primary inline-flex items-center"
         >
-          {({ loading, error }) => {
-            if (loading) return (
-              <>
-                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
+          {({ blob, url, loading, error }) =>
+            loading ? (
+              <span className="inline-flex items-center justify-center">
+                <ArrowPathIcon className={styles.smallIcon + " text-white animate-spin"} />
                 Generating PDF...
-              </>
-            );
-            
-            if (error) {
-              console.error("PDF Generation Error:", error);
-              setPdfError(error.message || "Error creating PDF");
-              return "Error creating PDF";
-            }
-            
-            return (
-              <>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2">
-                  <path fillRule="evenodd" d="M5.625 1.5H9a3.75 3.75 0 013.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 013.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 01-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875zm6.905 9.97a.75.75 0 00-1.06 0l-3 3a.75.75 0 101.06 1.06l1.72-1.72V18a.75.75 0 001.5 0v-4.19l1.72 1.72a.75.75 0 101.06-1.06l-3-3z" clipRule="evenodd" />
-                  <path d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z" />
-                </svg>
+              </span>
+            ) : (
+              <span className="inline-flex items-center justify-center">
                 Download PDF Report
-              </>
-            );
-          }}
+              </span>
+            )
+          }
         </PDFDownloadLink>
       );
-    } catch (err) {
-      console.error("Error rendering PDF link:", err);
-      return (
-        <button className="py-2.5 px-6 bg-red-600 text-white font-medium rounded-lg flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2">
-            <path fillRule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clipRule="evenodd" />
-          </svg>
-          PDF Error
-        </button>
-      );
+    } catch (error) {
+      setPdfError("Error generating PDF. Please try again.");
+      return <div className="text-red-500 mt-4">{pdfError}</div>;
     }
   };
   
@@ -417,9 +413,7 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
         <div className="gradient-card">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2 text-brand-primary">
-                <path fillRule="evenodd" d="M1.5 5.625c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v12.75c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 18.375V5.625zM21 9.375A.375.375 0 0020.625 9h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zm0 3.75a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zm0 3.75a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5a.375.375 0 00.375-.375v-1.5zM10.875 18.75a.375.375 0 00.375-.375v-1.5a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375h7.5zM3.375 15h7.5a.375.375 0 00.375-.375v-1.5a.375.375 0 00-.375-.375h-7.5a.375.375 0 00-.375.375v1.5c0 .207.168.375.375.375zm0-3.75h7.5a.375.375 0 00.375-.375v-1.5A.375.375 0 0010.875 9h-7.5A.375.375 0 003 9.375v1.5c0 .207.168.375.375.375z" clipRule="evenodd" />
-              </svg>
+              <ChartBarIcon className={styles.icon + " text-brand-primary"} />
               Performance
             </h3>
             <ScoreIndicator score={performanceScore} size="sm" />
@@ -446,12 +440,12 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
             {expandedSections.performance ? (
               <>
                 <span>Show less</span>
-                <ChevronUpIcon className="w-4 h-4 ml-1" />
+                <ChevronUpIcon className={styles.smallIcon} />
               </>
             ) : (
               <>
                 <span>Show details</span>
-                <ChevronDownIcon className="w-4 h-4 ml-1" />
+                <ChevronDownIcon className={styles.smallIcon + " ml-1"} />
               </>
             )}
           </button>
@@ -495,9 +489,7 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
         <div className="gradient-card">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2 text-brand-primary">
-                <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z" clipRule="evenodd" />
-              </svg>
+              <MagnifyingGlassIcon className={styles.icon + " text-brand-primary"} />
               SEO
             </h3>
             <ScoreIndicator score={seoScore} size="sm" />
@@ -529,12 +521,12 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
             {expandedSections.seo ? (
               <>
                 <span>Show less</span>
-                <ChevronUpIcon className="w-4 h-4 ml-1" />
+                <ChevronUpIcon className={styles.smallIcon} />
               </>
             ) : (
               <>
                 <span>Show details</span>
-                <ChevronDownIcon className="w-4 h-4 ml-1" />
+                <ChevronDownIcon className={styles.smallIcon + " ml-1"} />
               </>
             )}
           </button>
@@ -568,9 +560,7 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
         <div className="gradient-card">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2 text-brand-primary">
-                <path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 8.625a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25zM15.375 12a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0zM7.5 10.875a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25z" clipRule="evenodd" />
-              </svg>
+              <UserGroupIcon className={styles.icon + " text-brand-primary"} />
               Accessibility
             </h3>
             <ScoreIndicator score={accessibilityScore} size="sm" />
@@ -599,12 +589,12 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
             {expandedSections.accessibility ? (
               <>
                 <span>Show less</span>
-                <ChevronUpIcon className="w-4 h-4 ml-1" />
+                <ChevronUpIcon className={styles.smallIcon} />
               </>
             ) : (
               <>
                 <span>Show details</span>
-                <ChevronDownIcon className="w-4 h-4 ml-1" />
+                <ChevronDownIcon className={styles.smallIcon + " ml-1"} />
               </>
             )}
           </button>
@@ -626,7 +616,7 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
                     {getAccessibilityIssues().slice(0, 3).map((issue: any, index: number) => (
                       <li key={index} className="text-sm border-l-4 border-yellow-500 pl-2 py-1 bg-yellow-50">
                         <div className="font-medium flex items-start">
-                          <ExclamationTriangleIcon className="w-4 h-4 text-yellow-600 mr-1 mt-0.5" />
+                          <ExclamationTriangleIcon className={styles.smallIcon + " text-yellow-600"} />
                           <span>
                             {issue.impact === 'critical' ? 'Critical' : 
                              issue.impact === 'serious' ? 'Serious' :
@@ -645,7 +635,7 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
                   </ul>
                 ) : (
                   <p className="text-sm text-green-600 flex items-center">
-                    <CheckCircleIcon className="w-4 h-4 mr-1" />
+                    <CheckCircleIcon className={styles.smallIcon + " text-green-600"} />
                     No specific issues detected
                   </p>
                 )}
@@ -658,9 +648,7 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
         <div className="gradient-card">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 mr-2 text-brand-primary">
-                <path fillRule="evenodd" d="M12.516 2.17a.75.75 0 00-1.032 0 11.209 11.209 0 01-7.877 3.08.75.75 0 00-.722.515A12.74 12.74 0 002.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.75.75 0 00.374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 00-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08zm3.094 8.016a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-              </svg>
+              <ShieldCheckIcon className={styles.icon + " text-brand-primary"} />
               Security
             </h3>
             <ScoreIndicator score={securityScore} size="sm" />
@@ -687,12 +675,12 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
             {expandedSections.security ? (
               <>
                 <span>Show less</span>
-                <ChevronUpIcon className="w-4 h-4 ml-1" />
+                <ChevronUpIcon className={styles.smallIcon} />
               </>
             ) : (
               <>
                 <span>Show details</span>
-                <ChevronDownIcon className="w-4 h-4 ml-1" />
+                <ChevronDownIcon className={styles.smallIcon + " ml-1"} />
               </>
             )}
           </button>
@@ -730,7 +718,7 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
                   </ul>
                 ) : (
                   <div className="flex items-center text-green-600 text-sm">
-                    <CheckCircleIcon className="w-4 h-4 mr-1" />
+                    <CheckCircleIcon className={styles.smallIcon + " text-green-600"} />
                     No security issues detected
                   </div>
                 )}

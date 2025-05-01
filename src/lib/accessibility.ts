@@ -1,5 +1,7 @@
 import puppeteer from "puppeteer";
 import { AxeResults } from "axe-core";
+import fs from 'fs';
+import path from 'path';
 
 export interface AccessibilityResult {
   violations: AxeViolation[];
@@ -50,8 +52,10 @@ export async function runAccessibilityAudit(url: string): Promise<AccessibilityR
 
     // Inject and run axe-core
     console.log(`Injecting axe-core`);
+    
+    // Use the axe-core CDN instead of local file to avoid path issues
     await page.addScriptTag({
-      path: require.resolve("axe-core"),
+      url: 'https://unpkg.com/axe-core@4.8.3/axe.min.js'
     });
 
     // Run the accessibility tests
