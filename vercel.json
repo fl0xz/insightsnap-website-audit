@@ -7,6 +7,7 @@
     "enabled": true,
     "silent": false
   },
+  "ignoreCommand": "exit 0",
   "headers": [
     {
       "source": "/(.*)",
