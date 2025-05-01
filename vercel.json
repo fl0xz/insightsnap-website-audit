@@ -1,5 +1,13 @@
 {
   "version": 2,
-  "buildCommand": "echo 'Using static HTML deployment' && exit 0",
-  "outputDirectory": "public"
-} 
+  "public": true,
+  "cleanUrls": true,
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "github": {
+    "silent": true
+  }
+}
