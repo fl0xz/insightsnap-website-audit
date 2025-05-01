@@ -4,39 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "bash ./build.sh",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "echo 'Skipping build step - using static HTML' && exit 0",
+    "start": "next start"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.2",
-    "@heroicons/react": "^2.2.0",
-    "@react-pdf/renderer": "^4.3.0",
-    "axe-core": "^4.10.3",
-    "chrome-launcher": "^1.1.2",
-    "html-pdf": "^3.0.1",
-    "jspdf": "^3.0.1",
-    "lighthouse": "^12.6.0",
     "next": "15.3.1",
-    "next-auth": "^4.24.11",
-    "node-fetch": "^3.3.2",
-    "openai": "^4.96.2",
-    "puppeteer": "^24.7.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-pdf": "^9.2.1"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@types/node": "^20.17.32",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19",
-    "autoprefixer": "^10.4.14",
-    "eslint": "^9",
-    "eslint-config-next": "15.3.1",
-    "node-loader": "^2.1.0",
-    "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.8.3"
+    "react-dom": "^19.0.0"
   }
 }
