@@ -1,0 +1,13 @@
+# Ignoring node_modules
+node_modules
+
+# Ignore Next.js build output
+.next
+
+# Ignore TypeScript cache
+*.tsbuildinfo
+
+# Ignore development-only files
+.env.local
+.env.development
+.env.development.local 
