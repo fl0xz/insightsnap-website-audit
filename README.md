@@ -23,7 +23,7 @@ InsightSnap is a comprehensive website audit tool that provides detailed insight
 
 1. Clone the repository
    ```
-   git clone https://github.com/yourusername/insightsnap-website-audit.git
+   git clone https://github.com/fl0xz/insightsnap-website-audit.git
    cd insightsnap-website-audit
    ```
 
