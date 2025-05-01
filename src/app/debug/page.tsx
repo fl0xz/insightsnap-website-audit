@@ -1,5 +1,7 @@
 "use client";
 
+import Link from 'next/link';
+
 export default function DebugPage() {
   return (
     <div className="p-8">
@@ -22,7 +24,7 @@ export default function DebugPage() {
         </div>
         
         <div className="mt-8">
-          <a href="/" className="text-blue-500 underline">Back to Home</a>
+          <Link href="/" className="text-blue-500 underline">Back to Home</Link>
         </div>
       </div>
     </div>
