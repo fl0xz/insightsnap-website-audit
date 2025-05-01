@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Website Audit Tool
+
+A comprehensive website auditing tool built with Next.js that analyzes websites for SEO, performance, accessibility, and security issues. The tool generates detailed reports with recommendations that can be downloaded as PDF documents.
+
+## Features
+
+- **Performance Analysis**: Evaluates page load speed, rendering time, and other performance metrics
+- **SEO Assessment**: Analyzes meta tags, headings, content structure, and other SEO factors
+- **Accessibility Testing**: Checks for WCAG compliance and identifies accessibility issues
+- **Security Verification**: Examines HTTPS implementation, security headers, and potential vulnerabilities
+- **Detailed Reports**: Generates comprehensive reports with specific recommendations
+- **PDF Export**: Allows users to download branded PDF reports
+
+## Tech Stack
+
+- **Next.js**: React framework for the frontend and API routes
+- **TypeScript**: For type-safe code
+- **Tailwind CSS**: For styling
+- **Lighthouse**: For performance and SEO audits
+- **Axe-core**: For accessibility testing
+- **Puppeteer**: For headless browser automation
+- **OpenAI GPT**: For generating plain-English recommendations
+- **React-PDF**: For PDF report generation
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18.x or later
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/website-audit-tool.git
+   cd website-audit-tool
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Create a `.env.local` file in the project root with the following variables:
+   ```
+   OPENAI_API_KEY=your_openai_api_key_here
+   NEXT_PUBLIC_APP_URL=http://localhost:3000
+   ```
+
+### Running the Development Server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Enter a URL in the input field
+2. Click "Run Audit" to analyze the website
+3. View the audit results including performance, SEO, accessibility, and security scores
+4. Download the PDF report for sharing or future reference
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
+MIT
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributions are welcome! Please feel free to submit a Pull Request.
