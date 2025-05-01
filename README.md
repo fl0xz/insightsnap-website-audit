@@ -1,76 +1,64 @@
-# Website Audit Tool
+# InsightSnap Website Audit Tool
 
-A comprehensive website auditing tool built with Next.js that analyzes websites for SEO, performance, accessibility, and security issues. The tool generates detailed reports with recommendations that can be downloaded as PDF documents.
+InsightSnap is a comprehensive website audit tool that provides detailed insights into your website's performance, SEO, accessibility, and security. This professional-grade tool helps identify issues and opportunities to improve your online presence.
 
 ## Features
 
-- **Performance Analysis**: Evaluates page load speed, rendering time, and other performance metrics
-- **SEO Assessment**: Analyzes meta tags, headings, content structure, and other SEO factors
-- **Accessibility Testing**: Checks for WCAG compliance and identifies accessibility issues
-- **Security Verification**: Examines HTTPS implementation, security headers, and potential vulnerabilities
-- **Detailed Reports**: Generates comprehensive reports with specific recommendations
-- **PDF Export**: Allows users to download branded PDF reports
-
-## Tech Stack
-
-- **Next.js**: React framework for the frontend and API routes
-- **TypeScript**: For type-safe code
-- **Tailwind CSS**: For styling
-- **Lighthouse**: For performance and SEO audits
-- **Axe-core**: For accessibility testing
-- **Puppeteer**: For headless browser automation
-- **OpenAI GPT**: For generating plain-English recommendations
-- **React-PDF**: For PDF report generation
+- **Performance Analysis**: Measure load times, identify bottlenecks, and get actionable recommendations to speed up your site.
+- **SEO Analysis**: Discover opportunities to improve your search engine visibility and attract more organic traffic.
+- **Accessibility Testing**: Ensure your website is accessible to all users, including those with disabilities.
+- **Security Checks**: Identify security vulnerabilities and get recommendations to keep your website and users safe.
+- **Mobile Optimization**: Evaluate your website's performance on mobile devices and get tips for improvement.
+- **Best Practices**: Check your website against modern web standards and best practices.
+- **PDF Reports**: Generate detailed, client-ready PDF reports with your branding.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18.x or later
-- npm or yarn
+- Node.js 18.x or higher
+- NPM 9.x or higher
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/website-audit-tool.git
-   cd website-audit-tool
+1. Clone the repository
+   ```
+   git clone https://github.com/yourusername/insightsnap-website-audit.git
+   cd insightsnap-website-audit
    ```
 
-2. Install dependencies:
-   ```bash
+2. Install dependencies
+   ```
    npm install
-   # or
-   yarn install
    ```
 
-3. Create a `.env.local` file in the project root with the following variables:
+3. Run the development server
    ```
-   OPENAI_API_KEY=your_openai_api_key_here
-   NEXT_PUBLIC_APP_URL=http://localhost:3000
+   npm run dev
    ```
 
-### Running the Development Server
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Technology Stack
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+- Next.js 15.x
+- React 19.x
+- Tailwind CSS 3.x
+- Puppeteer (for accessibility testing)
+- Lighthouse (for performance testing)
 
-## Usage
+## Deployment
 
-1. Enter a URL in the input field
-2. Click "Run Audit" to analyze the website
-3. View the audit results including performance, SEO, accessibility, and security scores
-4. Download the PDF report for sharing or future reference
+This project is ready to be deployed on Vercel. Connect your GitHub repository to Vercel for automatic deployments.
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Contributing
+## Author
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+David Randell
+
+---
+
+© 2024 InsightSnap. All rights reserved.

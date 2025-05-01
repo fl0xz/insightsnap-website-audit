@@ -1,7 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
   images: {
     domains: ['localhost'],
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+        ],
+      },
+    ];
   },
   // Use serverExternalPackages instead of experimental.externalPackages
   serverExternalPackages: ['puppeteer', 'lighthouse'],
@@ -22,6 +45,9 @@ const nextConfig = {
         },
       };
     }
+    
+    // This is needed for loading Node.js modules in Next.js 
+    config.resolve.fallback = { fs: false, path: false, os: false };
     
     return config;
   },
