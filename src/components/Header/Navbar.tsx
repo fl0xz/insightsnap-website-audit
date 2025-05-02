@@ -44,6 +44,12 @@ const Navbar: React.FC<HeaderProps> = ({
               Features
             </Link>
             <Link 
+              href="/agency" 
+              className="text-[#1E1E1E] hover:text-[#5D3FD3] font-medium transition-colors"
+            >
+              Agencies
+            </Link>
+            <Link 
               href="/pricing" 
               className="text-[#1E1E1E] hover:text-[#5D3FD3] font-medium transition-colors"
             >
@@ -114,6 +120,13 @@ const Navbar: React.FC<HeaderProps> = ({
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Features
+              </Link>
+              <Link 
+                href="/agency" 
+                className="text-[#1E1E1E] hover:text-[#5D3FD3] font-medium transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Agencies
               </Link>
               <Link 
                 href="/pricing" 

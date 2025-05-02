@@ -11,7 +11,12 @@ import {
   getMobileOptimization, 
   getUXEvaluation,
   getPriorityLevel,
-  calculateSecurityScore
+  calculateSecurityScore,
+  getLandingPageClarity,
+  getConversionFunnelReadability,
+  getHeatmapAttentionPrediction,
+  getScriptTrackingAudit,
+  getFormAccessibilityCheck
 } from "./pdfHelpers";
 
 // Create styles
@@ -333,6 +338,58 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     width: 35,
     textAlign: "right",
+  },
+  scoreBarContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  gradeCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
+  },
+  gradeText: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  flexRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  metricBox: {
+    width: "48%",
+    padding: 10,
+    backgroundColor: "#F3F4F6",
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  metricValue: {
+    fontSize: 14,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  metricLabel: {
+    fontSize: 10,
+    color: "#6B7280",
+  },
+  attentionRank: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 10,
+  },
+  attentionRankText: {
+    color: "white",
+    fontSize: 10,
+    fontWeight: "bold",
   },
 });
 
@@ -757,6 +814,13 @@ const PDFReport: React.FC<PDFReportProps> = ({ results, url }) => {
   
   // Create action checklist items
   const checklistItems = createChecklistItems(results);
+
+  // Add these lines to get data for the new sections
+  const landingPageClarity = getLandingPageClarity(results);
+  const conversionFunnelReadability = getConversionFunnelReadability(results);
+  const heatmapAttentionPrediction = getHeatmapAttentionPrediction(results);
+  const scriptTrackingAudit = getScriptTrackingAudit(results);
+  const formAccessibilityCheck = getFormAccessibilityCheck(results);
 
   return (
     <Document>
@@ -1422,6 +1486,303 @@ const PDFReport: React.FC<PDFReportProps> = ({ results, url }) => {
       
       {/* Add the Upsell Page */}
       <UpsellPage />
+
+      {/* Advanced Analytics Page */}
+      <Page size="A4" style={styles.page}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Advanced Analytics</Text>
+          <Text style={styles.smallText}>Deeper insights into your website's conversion effectiveness and user experience</Text>
+        </View>
+        
+        {/* Landing Page Clarity */}
+        <View style={styles.section}>
+          <Text style={styles.subtitle}>Landing Page Clarity Score</Text>
+          <View style={styles.scoreContainer}>
+            <View style={[
+              styles.scoreCircle, 
+              { backgroundColor: landingPageClarity.score >= 80 ? '#10B981' : landingPageClarity.score >= 60 ? '#F59E0B' : '#EF4444' }
+            ]}>
+              <Text style={styles.scoreText}>{landingPageClarity.score}</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.emphasizedText}>
+                Landing Page Clarity: {landingPageClarity.score}/100
+              </Text>
+              <Text style={styles.smallText}>
+                {landingPageClarity.commentary}
+              </Text>
+            </View>
+          </View>
+          
+          <Text style={styles.sectionTitle}>Clarity Component Scores</Text>
+          <View style={styles.detailSection}>
+            <View style={styles.scoreBarContainer}>
+              <Text style={styles.smallText}>Headline Clarity</Text>
+              <View style={styles.progressBarContainer}>
+                <View 
+                  style={[
+                    styles.progressBar,
+                    { width: `${landingPageClarity.headlineClarityScore}%`, backgroundColor: landingPageClarity.headlineClarityScore >= 80 ? '#10B981' : landingPageClarity.headlineClarityScore >= 60 ? '#F59E0B' : '#EF4444' }
+                  ]}
+                />
+              </View>
+              <Text style={styles.percentageText}>{landingPageClarity.headlineClarityScore}%</Text>
+            </View>
+            
+            <View style={styles.scoreBarContainer}>
+              <Text style={styles.smallText}>Messaging Focus</Text>
+              <View style={styles.progressBarContainer}>
+                <View 
+                  style={[
+                    styles.progressBar,
+                    { width: `${landingPageClarity.messagingFocusScore}%`, backgroundColor: landingPageClarity.messagingFocusScore >= 80 ? '#10B981' : landingPageClarity.messagingFocusScore >= 60 ? '#F59E0B' : '#EF4444' }
+                  ]}
+                />
+              </View>
+              <Text style={styles.percentageText}>{landingPageClarity.messagingFocusScore}%</Text>
+            </View>
+            
+            <View style={styles.scoreBarContainer}>
+              <Text style={styles.smallText}>Trust Signals</Text>
+              <View style={styles.progressBarContainer}>
+                <View 
+                  style={[
+                    styles.progressBar,
+                    { width: `${landingPageClarity.trustSignalsScore}%`, backgroundColor: landingPageClarity.trustSignalsScore >= 80 ? '#10B981' : landingPageClarity.trustSignalsScore >= 60 ? '#F59E0B' : '#EF4444' }
+                  ]}
+                />
+              </View>
+              <Text style={styles.percentageText}>{landingPageClarity.trustSignalsScore}%</Text>
+            </View>
+            
+            <View style={styles.scoreBarContainer}>
+              <Text style={styles.smallText}>CTA Positioning</Text>
+              <View style={styles.progressBarContainer}>
+                <View 
+                  style={[
+                    styles.progressBar,
+                    { width: `${landingPageClarity.ctaPositioningScore}%`, backgroundColor: landingPageClarity.ctaPositioningScore >= 80 ? '#10B981' : landingPageClarity.ctaPositioningScore >= 60 ? '#F59E0B' : '#EF4444' }
+                  ]}
+                />
+              </View>
+              <Text style={styles.percentageText}>{landingPageClarity.ctaPositioningScore}%</Text>
+            </View>
+          </View>
+          
+          <Text style={styles.sectionTitle}>Improvement Recommendations</Text>
+          <View style={styles.detailSection}>
+            {landingPageClarity.suggestions.map((suggestion, index) => (
+              <View key={index} style={{ marginBottom: index < landingPageClarity.suggestions.length - 1 ? 8 : 0 }}>
+                <Text style={styles.emphasizedText}>{suggestion.title}</Text>
+                <Text style={styles.smallText}>{suggestion.description}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+        
+        {/* Conversion Funnel Readability */}
+        <View style={styles.section}>
+          <Text style={styles.subtitle}>Conversion Funnel Readability</Text>
+          <View style={styles.flexRow}>
+            <View style={[
+              styles.gradeCircle,
+              { 
+                backgroundColor: 
+                  conversionFunnelReadability.uxRating === 'A' ? '#10B981' :
+                  conversionFunnelReadability.uxRating === 'B' ? '#34D399' :
+                  conversionFunnelReadability.uxRating === 'C' ? '#F59E0B' :
+                  conversionFunnelReadability.uxRating === 'D' ? '#F97316' : '#EF4444'
+              }
+            ]}>
+              <Text style={styles.gradeText}>{conversionFunnelReadability.uxRating}</Text>
+            </View>
+            
+            <View style={{ flex: 1, marginLeft: 10 }}>
+              <Text style={styles.emphasizedText}>UX Rating: {conversionFunnelReadability.uxRating}</Text>
+              <Text style={styles.smallText}>
+                {conversionFunnelReadability.uxRating === "A" ? 
+                  "Your conversion funnel has excellent readability and usability, making it easy for users to complete desired actions." :
+                  conversionFunnelReadability.uxRating === "B" ? 
+                  "Your conversion funnel is generally clear, but has a few readability issues that may impact conversion rates." :
+                  conversionFunnelReadability.uxRating === "C" ? 
+                  "Your conversion funnel has moderate readability issues that are likely reducing your conversion rates significantly." :
+                  "Your conversion funnel has major readability and usability problems that require immediate attention."}
+              </Text>
+            </View>
+          </View>
+          
+          <Text style={styles.sectionTitle}>Critical Friction Points</Text>
+          <View style={styles.detailSection}>
+            {conversionFunnelReadability.issues.map((issue, index) => (
+              <View key={index} style={{ marginBottom: index < conversionFunnelReadability.issues.length - 1 ? 8 : 0 }}>
+                <Text style={styles.emphasizedText}>{issue.title}</Text>
+                <Text style={styles.smallText}>{issue.description}</Text>
+              </View>
+            ))}
+          </View>
+          
+          <Text style={styles.sectionTitle}>Quick Conversion Wins</Text>
+          <View style={styles.detailSection}>
+            {conversionFunnelReadability.recommendations.map((recommendation, index) => (
+              <View key={index} style={styles.listItem}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.itemContent}>{recommendation}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      </Page>
+      
+      {/* More Advanced Analytics Page */}
+      <Page size="A4" style={styles.page}>
+        {/* Heatmap Attention Prediction */}
+        <View style={styles.section}>
+          <Text style={styles.subtitle}>Heatmap Attention Prediction</Text>
+          <View style={[styles.detailSection, { backgroundColor: '#1F2937', padding: 15 }]}>
+            <Text style={[styles.smallText, { color: '#D1D5DB', marginBottom: 5 }]}>AI-MODELED USER ATTENTION PATTERN</Text>
+            <Text style={{ fontSize: 14, color: 'white', fontWeight: 'bold' }}>
+              "{heatmapAttentionPrediction.prediction}"
+            </Text>
+          </View>
+          
+          <Text style={styles.sectionTitle}>Attention Priority Ranking</Text>
+          <View style={styles.detailSection}>
+            {heatmapAttentionPrediction.visualElements.map((element, index) => (
+              <View key={index} style={[styles.flexRow, { marginBottom: index < heatmapAttentionPrediction.visualElements.length - 1 ? 8 : 0 }]}>
+                <View style={styles.attentionRank}>
+                  <Text style={styles.attentionRankText}>{element.attentionRank}</Text>
+                </View>
+                <Text style={[styles.smallText, { fontWeight: 'bold' }]}>{element.element}</Text>
+              </View>
+            ))}
+          </View>
+          
+          <Text style={styles.sectionTitle}>Improve Attention Flow</Text>
+          <View style={styles.detailSection}>
+            {heatmapAttentionPrediction.suggestions.map((suggestion, index) => (
+              <View key={index} style={styles.listItem}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.itemContent}>{suggestion}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+        
+        {/* Script Tracking Audit */}
+        <View style={styles.section}>
+          <Text style={styles.subtitle}>Script & Tracking Audit</Text>
+          
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginBottom: 10 }}>
+            <View style={styles.metricBox}>
+              <Text style={styles.metricValue}>{scriptTrackingAudit.scriptCount}</Text>
+              <Text style={styles.metricLabel}>Total Scripts</Text>
+            </View>
+            
+            <View style={styles.metricBox}>
+              <Text style={styles.metricValue}>{scriptTrackingAudit.thirdPartyCount}</Text>
+              <Text style={styles.metricLabel}>Third-Party</Text>
+            </View>
+            
+            <View style={styles.metricBox}>
+              <Text style={styles.metricValue}>{scriptTrackingAudit.loadTimePenalty}s</Text>
+              <Text style={styles.metricLabel}>Load Penalty</Text>
+            </View>
+            
+            <View style={styles.metricBox}>
+              <Text style={[
+                styles.metricValue, 
+                { color: scriptTrackingAudit.hasGdprIssues ? '#EF4444' : '#10B981' }
+              ]}>
+                {scriptTrackingAudit.hasGdprIssues ? 'At Risk' : 'Compliant'}
+              </Text>
+              <Text style={styles.metricLabel}>GDPR Status</Text>
+            </View>
+          </View>
+          
+          <Text style={styles.sectionTitle}>Detected Tracking Scripts</Text>
+          <View style={styles.detailSection}>
+            {scriptTrackingAudit.scripts.map((script, index) => (
+              <View key={index} style={{ marginBottom: index < scriptTrackingAudit.scripts.length - 1 ? 8 : 0 }}>
+                <Text style={styles.emphasizedText}>{script.name} ({script.type})</Text>
+                <Text style={styles.smallText}>
+                  Impact: {script.impact} | Recommendation: {script.recommendation}
+                </Text>
+              </View>
+            ))}
+          </View>
+          
+          {scriptTrackingAudit.gdprIssues.length > 0 && (
+            <>
+              <Text style={styles.sectionTitle}>GDPR Compliance Concerns</Text>
+              <View style={[styles.detailSection, { backgroundColor: '#FEF2F2', borderColor: '#EF4444', borderWidth: 1 }]}>
+                {scriptTrackingAudit.gdprIssues.map((issue, index) => (
+                  <View key={index} style={styles.listItem}>
+                    <Text style={[styles.bullet, { color: '#EF4444' }]}>⨯</Text>
+                    <Text style={[styles.itemContent, { color: '#B91C1C' }]}>{issue}</Text>
+                  </View>
+                ))}
+              </View>
+            </>
+          )}
+        </View>
+        
+        {/* Form Accessibility Check */}
+        <View style={styles.section}>
+          <Text style={styles.subtitle}>Form Accessibility Check</Text>
+          <View style={styles.scoreContainer}>
+            <View style={[
+              styles.scoreCircle, 
+              { backgroundColor: formAccessibilityCheck.formScore >= 80 ? '#10B981' : formAccessibilityCheck.formScore >= 60 ? '#F59E0B' : '#EF4444' }
+            ]}>
+              <Text style={styles.scoreText}>{formAccessibilityCheck.formScore}</Text>
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.emphasizedText}>
+                Form Accessibility Score: {formAccessibilityCheck.formScore}/100
+              </Text>
+              <Text style={styles.smallText}>
+                {formAccessibilityCheck.formScore >= 80 ? 
+                  "Your forms are largely accessible, but there are minor improvements that would enhance the experience for all users." :
+                  formAccessibilityCheck.formScore >= 60 ? 
+                  "Your forms have several accessibility issues that could prevent some users from successfully completing them." :
+                  "Your forms have significant accessibility problems that will prevent many users from being able to complete them successfully."}
+              </Text>
+            </View>
+          </View>
+          
+          <Text style={styles.sectionTitle}>Detected Issues</Text>
+          <View style={styles.detailSection}>
+            {formAccessibilityCheck.accessibilityIssues.map((issue, index) => (
+              <View key={index} style={{ marginBottom: index < formAccessibilityCheck.accessibilityIssues.length - 1 ? 8 : 0 }}>
+                <Text style={styles.emphasizedText}>{issue.title}</Text>
+                <Text style={styles.smallText}>{issue.description}</Text>
+              </View>
+            ))}
+          </View>
+          
+          <Text style={styles.sectionTitle}>How to Fix</Text>
+          <View style={styles.detailSection}>
+            {formAccessibilityCheck.recommendations.map((recommendation, index) => (
+              <View key={index} style={styles.listItem}>
+                <Text style={styles.bullet}>•</Text>
+                <Text style={styles.itemContent}>{recommendation}</Text>
+              </View>
+            ))}
+          </View>
+        </View>
+        
+        <View style={styles.brandingFooter}>
+          <InsightSnapLogo />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.footerText}>
+              © InsightSnap 2025 | <Text style={styles.footerLink}>insightsnap.ai</Text>
+            </Text>
+            <Text style={styles.footerText}>
+              Report generated on {new Date().toLocaleDateString()}
+            </Text>
+          </View>
+        </View>
+      </Page>
     </Document>
   );
 };
