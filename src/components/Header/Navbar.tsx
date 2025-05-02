@@ -61,6 +61,12 @@ const Navbar: React.FC<HeaderProps> = ({
             >
               Contact
             </Link>
+            <Link 
+              href="/premium-components-test" 
+              className="text-[#1E1E1E] hover:text-[#5D3FD3] font-medium transition-colors"
+            >
+              Premium Demo
+            </Link>
             
             {isAuthenticated ? (
               <div className="flex items-center space-x-4">
@@ -141,6 +147,13 @@ const Navbar: React.FC<HeaderProps> = ({
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Contact
+              </Link>
+              <Link 
+                href="/premium-components-test" 
+                className="text-[#1E1E1E] hover:text-[#5D3FD3] font-medium transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Premium Demo
               </Link>
               
               {isAuthenticated ? (
