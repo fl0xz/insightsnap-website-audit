@@ -27,6 +27,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+.vercelignore
 
 # typescript
 *.tsbuildinfo
@@ -34,3 +35,6 @@ next-env.d.ts
 
 # temp folders
 /temp-test
+
+# build scripts
+build.sh
