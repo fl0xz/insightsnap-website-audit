@@ -6,6 +6,9 @@ import ConversionFunnelEvaluation from '@/components/ui/ConversionFunnelEvaluati
 import ScriptTrackerAudit from '@/components/ui/ScriptTrackerAudit';
 import AccessibilityUXScore from '@/components/ui/AccessibilityUXScore';
 import MobileOptimization from '@/components/ui/MobileOptimization';
+import AuditComparison from '@/components/ui/AuditComparison';
+import AuditHistory from '@/components/ui/AuditHistory';
+import FixRequestCTA from '@/components/ui/FixRequestCTA';
 
 export default function PremiumComponentsTest() {
   // Demo state for toggling features
@@ -56,7 +59,6 @@ export default function PremiumComponentsTest() {
           <ScriptTrackerAudit 
             websiteUrl="example.com"
             isLocked={isLocked}
-            isLoading={isLoading}
           />
           
           <AccessibilityUXScore 
@@ -69,6 +71,22 @@ export default function PremiumComponentsTest() {
             websiteUrl="example.com"
             isLocked={isLocked}
             isLoading={isLoading}
+          />
+          
+          <AuditComparison 
+            websiteUrl="example.com"
+            isLocked={isLocked}
+          />
+          
+          <AuditHistory 
+            websiteUrl="example.com"
+            isLocked={isLocked}
+            isLoading={isLoading}
+          />
+          
+          <FixRequestCTA 
+            websiteUrl="example.com"
+            totalIssues={24}
           />
         </div>
       </div>
