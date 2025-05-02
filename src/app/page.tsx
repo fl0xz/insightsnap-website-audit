@@ -5,10 +5,27 @@ import Header from "@/components/Header/Header";
 import AuditForm from "@/components/AuditForm/AuditForm";
 import AuditResults from "@/components/AuditResults/AuditResults";
 
+// Mock authentication state for demonstration
+// In a real app, this would come from a provider or API
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  
+  // Authentication state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userPlan, setUserPlan] = useState<'free' | 'pro' | 'agency' | null>(null);
+  
+  // This would be a real authentication function in a production app
+  const handleLogin = (plan: 'free' | 'pro' | 'agency' = 'free') => {
+    setIsAuthenticated(true);
+    setUserPlan(plan);
+  };
+  
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUserPlan(null);
+  };
 
   const runAudit = async (url: string) => {
     setIsLoading(true);
@@ -39,7 +56,12 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-brand-bg">
-      <Header />
+      <Header 
+        isAuthenticated={isAuthenticated} 
+        userPlan={userPlan}
+        onLogin={handleLogin}
+        onLogout={handleLogout}
+      />
       
       <main className="flex-grow container mx-auto px-4 py-8 md:py-16">
         <div className="max-w-5xl mx-auto">
@@ -51,6 +73,34 @@ export default function Home() {
               <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
                 Get comprehensive insights into your website's performance, SEO, accessibility, and security.
               </p>
+              
+              {/* Auth demo controls - would not be present in a real app */}
+              <div className="mb-8 flex justify-center space-x-4">
+                <button
+                  onClick={() => handleLogin('free')}
+                  className={`px-4 py-2 rounded ${isAuthenticated && userPlan === 'free' ? 'bg-[#5D3FD3] text-white' : 'bg-gray-200 text-gray-800'}`}
+                >
+                  Free Plan
+                </button>
+                <button
+                  onClick={() => handleLogin('pro')}
+                  className={`px-4 py-2 rounded ${isAuthenticated && userPlan === 'pro' ? 'bg-[#5D3FD3] text-white' : 'bg-gray-200 text-gray-800'}`}
+                >
+                  Pro Plan
+                </button>
+                <button
+                  onClick={() => handleLogin('agency')}
+                  className={`px-4 py-2 rounded ${isAuthenticated && userPlan === 'agency' ? 'bg-[#5D3FD3] text-white' : 'bg-gray-200 text-gray-800'}`}
+                >
+                  Agency Plan
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className={`px-4 py-2 rounded ${!isAuthenticated ? 'bg-[#5D3FD3] text-white' : 'bg-gray-200 text-gray-800'}`}
+                >
+                  Not Logged In
+                </button>
+              </div>
               
               <div className="bg-white p-8 rounded-xl shadow-card">
                 <AuditForm onSubmit={runAudit} isLoading={isLoading} />
@@ -96,7 +146,11 @@ export default function Home() {
             </div>
           ) : (
             <div className="bg-white p-6 rounded-xl shadow-card">
-              <AuditResults results={results} />
+              <AuditResults 
+                results={results} 
+                isAuthenticated={isAuthenticated}
+                userPlan={userPlan}
+              />
             </div>
           )}
         </div>

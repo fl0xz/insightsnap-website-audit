@@ -1,9 +1,25 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import InsightSnapLogo from "@/components/ui/InsightSnapLogo";
+import { HeaderProps } from "./Header";
 
-const Navbar: React.FC = () => {
+const Navbar: React.FC<HeaderProps> = ({
+  isAuthenticated = false,
+  userPlan = null,
+  onLogin,
+  onLogout
+}) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Get plan display name
+  const getPlanName = () => {
+    switch(userPlan) {
+      case 'free': return 'Free Plan';
+      case 'pro': return 'Pro Plan';
+      case 'agency': return 'Agency Plan';
+      default: return 'Account';
+    }
+  };
 
   return (
     <nav className="bg-white shadow-sm">
@@ -39,12 +55,27 @@ const Navbar: React.FC = () => {
             >
               Contact
             </Link>
-            <Link 
-              href="/login" 
-              className="ml-4 bg-[#5D3FD3] hover:bg-[#4F33B0] text-white px-5 py-2 rounded-md transition-colors font-medium"
-            >
-              Login
-            </Link>
+            
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-[#1E1E1E] font-medium">
+                  {getPlanName()}
+                </span>
+                <button
+                  onClick={onLogout}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-5 py-2 rounded-md transition-colors font-medium"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link 
+                href="/login" 
+                className="ml-4 bg-[#5D3FD3] hover:bg-[#4F33B0] text-white px-5 py-2 rounded-md transition-colors font-medium"
+              >
+                Login
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -98,13 +129,31 @@ const Navbar: React.FC = () => {
               >
                 Contact
               </Link>
-              <Link 
-                href="/login" 
-                className="bg-[#5D3FD3] hover:bg-[#4F33B0] text-white px-5 py-2 rounded-md transition-colors font-medium inline-block w-full text-center"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Login
-              </Link>
+              
+              {isAuthenticated ? (
+                <>
+                  <div className="text-[#1E1E1E] font-medium">
+                    {getPlanName()}
+                  </div>
+                  <button
+                    onClick={() => {
+                      if (onLogout) onLogout();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-5 py-2 rounded-md transition-colors font-medium w-full text-center"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <Link 
+                  href="/login" 
+                  className="bg-[#5D3FD3] hover:bg-[#4F33B0] text-white px-5 py-2 rounded-md transition-colors font-medium inline-block w-full text-center"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Login
+                </Link>
+              )}
             </div>
           </div>
         )}
