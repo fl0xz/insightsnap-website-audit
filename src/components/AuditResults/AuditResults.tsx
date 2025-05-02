@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import PDFReport from "@/components/PDFReport/PDFReport";
+import UpsellSection from "./UpsellSection";
 import { 
   ChevronDownIcon, 
   ChevronUpIcon, 
@@ -733,6 +734,9 @@ const AuditResults: React.FC<AuditResultsProps> = ({ results }) => {
       
       {/* Best Practices */}
       <BestPractices results={results} />
+      
+      {/* Upsell Section */}
+      <UpsellSection />
       
       <div className="mt-8 text-center">
         <button 

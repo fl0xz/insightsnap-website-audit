@@ -4,6 +4,7 @@ import InsightSnapLogo from "./InsightSnapLogo";
 import TrafficLightIndicator from "./TrafficLightIndicator";
 import ActionChecklist from "./ActionChecklist";
 import CompetitorComparison from "./CompetitorComparison";
+import UpsellPage from "./UpsellPage";
 import { 
   calculateCombinedScore, 
   getSeoBreakdown, 
@@ -1418,6 +1419,9 @@ const PDFReport: React.FC<PDFReportProps> = ({ results, url }) => {
           </View>
         </View>
       </Page>
+      
+      {/* Add the Upsell Page */}
+      <UpsellPage />
     </Document>
   );
 };
