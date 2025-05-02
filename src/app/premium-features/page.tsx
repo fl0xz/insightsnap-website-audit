@@ -3,19 +3,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/Header/Header";
-import RealUserMonitoring from "@/components/monitoring/RealUserMonitoring";
-import SyntheticTransactionMonitoring from "@/components/transactions/SyntheticTransactionMonitoring";
-import APIMonitoring from "@/components/apiMonitoring/APIMonitoring";
 import ScriptTrackerAudit from "@/components/ui/ScriptTrackerAudit";
 import AccessibilityUXScore from "@/components/ui/AccessibilityUXScore";
 import MobileOptimization from "@/components/ui/MobileOptimization";
 import AILandingPageAnalysis from "@/components/ui/AILandingPageAnalysis";
 import ConversionFunnelEvaluation from "@/components/ui/ConversionFunnelEvaluation";
-import WhiteLabelSettings from "@/components/agencies/WhiteLabelSettings";
-import TeamAccess from "@/components/agencies/TeamAccess";
-import TestimonialsCarousel from "@/components/trust/TestimonialsCarousel";
-import ClientLogos from "@/components/trust/ClientLogos";
-import MediaLogos from "@/components/trust/MediaLogos";
 import AuditHistory from "@/components/ui/AuditHistory";
 import FixRequestCTA from "@/components/ui/FixRequestCTA";
 import AuditComparison from "@/components/ui/AuditComparison";
@@ -84,16 +76,6 @@ export default function PremiumFeaturesPage() {
                 </button>
                 <button
                   className={`px-3 py-1.5 rounded-md text-sm transition ${
-                    selectedCategory === "monitoring" 
-                      ? "bg-purple-600 text-white" 
-                      : "bg-white text-gray-700 hover:bg-gray-100"
-                  }`}
-                  onClick={() => setSelectedCategory("monitoring")}
-                >
-                  Monitoring
-                </button>
-                <button
-                  className={`px-3 py-1.5 rounded-md text-sm transition ${
                     selectedCategory === "audit" 
                       ? "bg-purple-600 text-white" 
                       : "bg-white text-gray-700 hover:bg-gray-100"
@@ -101,26 +83,6 @@ export default function PremiumFeaturesPage() {
                   onClick={() => setSelectedCategory("audit")}
                 >
                   Audit Features
-                </button>
-                <button
-                  className={`px-3 py-1.5 rounded-md text-sm transition ${
-                    selectedCategory === "agency" 
-                      ? "bg-purple-600 text-white" 
-                      : "bg-white text-gray-700 hover:bg-gray-100"
-                  }`}
-                  onClick={() => setSelectedCategory("agency")}
-                >
-                  Agency Tools
-                </button>
-                <button
-                  className={`px-3 py-1.5 rounded-md text-sm transition ${
-                    selectedCategory === "trust" 
-                      ? "bg-purple-600 text-white" 
-                      : "bg-white text-gray-700 hover:bg-gray-100"
-                  }`}
-                  onClick={() => setSelectedCategory("trust")}
-                >
-                  Trust Elements
                 </button>
               </div>
               
@@ -154,34 +116,8 @@ export default function PremiumFeaturesPage() {
           </div>
         </section>
         
-        {/* Monitoring Features */}
-        {shouldShowFeature("monitoring") && (
-          <section className="py-8">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Monitoring Features</h2>
-              
-              <div className="grid grid-cols-1 gap-8">
-                <RealUserMonitoring 
-                  isLocked={featureStates.isLocked} 
-                  websiteUrl="example.com"
-                />
-                
-                <SyntheticTransactionMonitoring 
-                  isLocked={featureStates.isLocked} 
-                  websiteUrl="example.com"
-                />
-                
-                <APIMonitoring 
-                  isLocked={featureStates.isLocked} 
-                  websiteUrl="example.com"
-                />
-              </div>
-            </div>
-          </section>
-        )}
-        
         {/* Audit Features */}
-        {shouldShowFeature("audit") && (
+        {shouldShowFeature("audit") || selectedCategory === "all" && (
           <section className="py-8">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Audit Features</h2>
@@ -215,20 +151,6 @@ export default function PremiumFeaturesPage() {
                   isLoading={featureStates.isLoading}
                   websiteUrl="example.com"
                 />
-              </div>
-            </div>
-          </section>
-        )}
-        
-        {/* Agency Features */}
-        {shouldShowFeature("agency") && (
-          <section className="py-8">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Agency Tools</h2>
-              
-              <div className="grid grid-cols-1 gap-8">
-                <WhiteLabelSettings isLocked={featureStates.isLocked} />
-                <TeamAccess isLocked={featureStates.isLocked} />
                 
                 <AuditHistory 
                   isLocked={featureStates.isLocked} 
@@ -250,32 +172,6 @@ export default function PremiumFeaturesPage() {
             />
           </div>
         </section>
-        
-        {/* Trust Elements */}
-        {shouldShowFeature("trust") && (
-          <section className="py-8">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Trust Elements</h2>
-              
-              <div className="space-y-12">
-                <div className="bg-white rounded-xl shadow-sm overflow-hidden p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Client Logos</h3>
-                  <ClientLogos title="Trusted by innovative companies" />
-                </div>
-                
-                <div className="bg-white rounded-xl shadow-sm overflow-hidden p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Testimonials Carousel</h3>
-                  <TestimonialsCarousel />
-                </div>
-                
-                <div className="bg-white rounded-xl shadow-sm overflow-hidden p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Media Mentions</h3>
-                  <MediaLogos title="As seen on" />
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
         
         {/* Fix Request CTA */}
         <section className="py-8">
