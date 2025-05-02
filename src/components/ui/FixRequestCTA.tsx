@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
   WrenchScrewdriverIcon,
-  LightningBoltIcon,
+  BoltIcon,
   RocketLaunchIcon,
   ArrowRightIcon,
   CheckIcon
@@ -31,7 +31,7 @@ const servicePackages = [
       "Internal linking fixes",
       "Image alt text optimization"
     ],
-    icon: <LightningBoltIcon className="h-8 w-8 text-amber-500" />
+    icon: <BoltIcon className="h-8 w-8 text-amber-500" />
   },
   {
     id: "speed-surge",
